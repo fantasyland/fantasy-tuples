@@ -1,0 +1,24 @@
+{
+  "name": "fantasy-tuples",
+  "version": "0.0.0",
+  "description": "Tuple data structures.",
+  "main": "tuples.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/puffnfresh/fantasy-tuples.git"
+  },
+  "keywords": [
+    "fantasyland",
+    "tuples",
+    "semigroup"
+  ],
+  "author": "Brian McKenna",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/puffnfresh/fantasy-tuples/issues"
+  },
+  "dependencies": {
+    "daggy": "0.0.1"
+  }
+}
