@@ -1,6 +1,6 @@
 {
   "name": "fantasy-tuples",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tuple data structures.",
   "main": "tuples.js",
   "scripts": {},
@@ -20,5 +20,14 @@
   },
   "dependencies": {
     "daggy": "0.0.1"
+  },
+  "devDependencies": {
+    "grunt-cli": "0.1.9",
+    "grunt": "0.4.x",
+    "grunt-contrib-jshint": "0.6.x",
+    "grunt-contrib-nodeunit": "0.2.0",
+    "fantasy-check": "0.1.6",
+    "fantasy-helpers": "0.0.x",
+    "fantasy-combinators": "0.0.x"
   }
 }
