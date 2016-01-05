@@ -1,8 +1,10 @@
-var daggy = require('daggy'),
-    Tuple2 = daggy.tagged('_1', '_2'),
-    Tuple3 = daggy.tagged('_1', '_2', '_3'),
-    Tuple4 = daggy.tagged('_1', '_2', '_3', '_4'),
-    Tuple5 = daggy.tagged('_1', '_2', '_3', '_4', '_5');
+const daggy = require('daggy');
+const {Tuple} = require('./nested');
+
+const Tuple2 = Tuple;
+const Tuple3 = daggy.tagged('_1', '_2', '_3');
+const Tuple4 = daggy.tagged('_1', '_2', '_3', '_4');
+const Tuple5 = daggy.tagged('_1', '_2', '_3', '_4', '_5');
 
 // Methods
 Tuple2.prototype.concat = function(b) {
@@ -37,9 +39,5 @@ Tuple5.prototype.concat = function(b) {
 };
 
 // Export
-if(typeof exports != 'undefined') {
-    exports.Tuple2 = Tuple2;
-    exports.Tuple3 = Tuple3;
-    exports.Tuple4 = Tuple4;
-    exports.Tuple5 = Tuple5;
-}
+if(typeof module != 'undefined')
+    module.exports = {Tuple, Tuple2, Tuple3, Tuple4, Tuple5};

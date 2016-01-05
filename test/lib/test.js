@@ -1,15 +1,8 @@
-var λ = require('fantasy-check/src/adapters/nodeunit'),
-    helpers = require('fantasy-helpers'),
-    combinators = require('fantasy-combinators'),
-    tuples = require('../../fantasy-tuples'),
-
-    functionLength = helpers.functionLength,
-    identity = combinators.identity,
-
-    Tuple2 = tuples.Tuple2,
-    Tuple3 = tuples.Tuple3,
-    Tuple4 = tuples.Tuple4,
-    Tuple5 = tuples.Tuple5;
+const λ = require('fantasy-check/src/adapters/nodeunit');
+const {equals} = require('fantasy-equality');
+const {functionLength} = require('fantasy-helpers');
+const {identity} = require('fantasy-combinators');
+const {Tuple2, Tuple3, Tuple4, Tuple5} = require('../../fantasy-tuples');
 
 function map(a, f) {
     var accum = [],
@@ -28,8 +21,8 @@ function fill(s, f) {
 }
 
 function range(a, b) {
-    var total = b - a;
-    var rec = function(x, y) {
+    const total = b - a;
+    const rec = function(x, y) {
         if (y - a >= total)
             return x;
 
@@ -40,44 +33,39 @@ function range(a, b) {
 }
 
 function tuple2Of() {
-    var self = this.getInstance(this, tuple2Of);
+    const self = this.getInstance(this, tuple2Of);
     self.types = [].slice.call(arguments);
     return self;
 }
 function tuple3Of() {
-    var self = this.getInstance(this, tuple3Of);
+    const self = this.getInstance(this, tuple3Of);
     self.types = [].slice.call(arguments);
     return self;
 }
 function tuple4Of() {
-    var self = this.getInstance(this, tuple4Of);
+    const self = this.getInstance(this, tuple4Of);
     self.types = [].slice.call(arguments);
     return self;
 }
 function tuple5Of() {
-    var self = this.getInstance(this, tuple5Of);
+    const self = this.getInstance(this, tuple5Of);
     self.types = [].slice.call(arguments);
     return self;
 }
 
-var arbTuple = function(t, n) {
+function arbTuple(t, n) {
     return function(a, s) {
-        var env = this;
         return t.apply(this, map(
-            fill(n, function(i) {
-                return a.types[i];
-            }),
-            function(arg) {
-                return env.arb(arg, s);
-            }
+            fill(n, (i) => a.types[i]),
+            (arg) => this.arb(arg, s)
         ));
     };
 };
 
-var isTuple2Of = λ.isInstanceOf(tuple2Of);
-var isTuple3Of = λ.isInstanceOf(tuple3Of);
-var isTuple4Of = λ.isInstanceOf(tuple4Of);
-var isTuple5Of = λ.isInstanceOf(tuple5Of);
+const isTuple2Of = λ.isInstanceOf(tuple2Of);
+const isTuple3Of = λ.isInstanceOf(tuple3Of);
+const isTuple4Of = λ.isInstanceOf(tuple4Of);
+const isTuple5Of = λ.isInstanceOf(tuple5Of);
 
 function foldLeft(a, v, f) {
     var i;
@@ -95,25 +83,13 @@ function zipWith(a, b) {
     }
     return accum;
 }
-function equals(a, b) {
-    var x = Object.keys(a).sort().map(function(v) {
-            return a[v];
-        }),
-        y = Object.keys(b).sort().map(function(v) {
-            return b[v];
-        });
-    return foldLeft(zipWith(x, y), true, function(a, b) {
-            return a && b._1 === b._2;
-        });
-}
 
-
-λ = λ
+const λʹ = λ
     .property('equals', equals)
     .property('checkTagged', function(type, args, access) {
         var env = this;
         return function(test) {
-            var length = functionLength(type);
+            const length = functionLength(type);
             fill(length, identity).forEach(function (value, index) {
                 function property() {
                     return access(type.apply(this, arguments), index) === arguments[index];
@@ -151,4 +127,4 @@ function equals(a, b) {
     .method('arb', isTuple5Of, arbTuple(Tuple5, 5));
 
 if (typeof module != 'undefined')
-    module.exports = λ;
+    module.exports = λʹ;

@@ -1,40 +1,32 @@
-var λ = require('./lib/test'),
-    tuples = require('../fantasy-tuples');
+const λ = require('./lib/test');
+const tuples = require('../fantasy-tuples');
 
 exports.tuples = {
     'when checking tuple2 constructor arguments': λ.checkTagged(
         tuples.Tuple2,
         [λ.AnyVal, λ.AnyVal],
-        function (tuple, index) {
-            return tuple['_' + (index + 1)];
-        }
+        (tuple, index) => tuple['_' + (index + 1)]
     ),
     'when checking tuple3 constructor arguments': λ.checkTagged(
         tuples.Tuple3,
         [λ.AnyVal, λ.AnyVal, λ.AnyVal],
-        function (tuple, index) {
-            return tuple['_' + (index + 1)];
-        }
+        (tuple, index) => tuple['_' + (index + 1)]
     ),
     'when checking tuple4 constructor arguments': λ.checkTagged(
         tuples.Tuple4,
         [λ.AnyVal, λ.AnyVal, λ.AnyVal, λ.AnyVal],
-        function (tuple, index) {
-            return tuple['_' + (index + 1)];
-        }
+        (tuple, index) => tuple['_' + (index + 1)]
     ),
     'when checking tuple5 constructor arguments': λ.checkTagged(
         tuples.Tuple5,
         [λ.AnyVal, λ.AnyVal, λ.AnyVal, λ.AnyVal, λ.AnyVal],
-        function (tuple, index) {
-            return tuple['_' + (index + 1)];
-        }
+        (tuple, index) => tuple['_' + (index + 1)]
     )
 };
 
 exports.tuple2 = {
     'when checking concat should return correct value': λ.check(
-        function(a, b) {
+        (a, b) => {
             return λ.equals(
                 a.concat(b),
                 tuples.Tuple2(
@@ -52,7 +44,7 @@ exports.tuple2 = {
 
 exports.tuple3 = {
     'when checking concat should return correct value': λ.check(
-        function(a, b) {
+        (a, b) => {
             return λ.equals(
                 a.concat(b),
                 tuples.Tuple3(
@@ -71,7 +63,7 @@ exports.tuple3 = {
 
 exports.tuple4 = {
     'when checking concat should return correct value': λ.check(
-        function(a, b, c, d) {
+        (a, b, c, d) => {
             return λ.equals(
                 a.concat(b),
                 tuples.Tuple4(
@@ -91,7 +83,7 @@ exports.tuple4 = {
 
 exports.tuple5 = {
     'when checking concat should return correct value': λ.check(
-        function(a, b, c, d) {
+        (a, b, c, d) => {
             return λ.equals(
                 a.concat(b),
                 tuples.Tuple5(
