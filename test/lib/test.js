@@ -126,5 +126,4 @@ const λʹ = λ
     .method('arb', isTuple4Of, arbTuple(Tuple4, 4))
     .method('arb', isTuple5Of, arbTuple(Tuple5, 5));
 
-if (typeof module != 'undefined')
-    module.exports = λʹ;
+module.exports = λʹ;

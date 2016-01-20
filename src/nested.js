@@ -1,11 +1,12 @@
-const daggy = require('daggy');
-const Tuple = daggy.tagged('_1', '_2');
+const {tagged} = require('daggy');
+const {map, extend, extract} = require('fantasy-land');
+const Tuple = tagged('_1', '_2');
 
 // Methods
 Tuple.prototype.bimap = function(f, g) {
     return Tuple(f(this._1), g(this._2));
 };
-Tuple.prototype.map = function(f) {
+Tuple.prototype[map] = function(f) {
     return Tuple(this._1, f(this._2));
 };
 Tuple.prototype.curry = function(f) {
@@ -14,10 +15,10 @@ Tuple.prototype.curry = function(f) {
 Tuple.prototype.uncurry = function(f) {
     return f(this._1, this._2);
 };
-Tuple.prototype.extend = function(f) {
+Tuple.prototype[extend] = function(f) {
     return Tuple(this._1, f(this._2));
 };
-Tuple.prototype.extract = function()  {
+Tuple.prototype[extract] = function()  {
     return this._2;
 };
 Tuple.prototype.foldl = function(f, z) {
@@ -26,7 +27,7 @@ Tuple.prototype.foldl = function(f, z) {
 Tuple.prototype.foldr = function(f, z) {
     return f(z, this._2);
 };
-Tuple.prototype.foldMap = function(f) {
+Tuple.prototype.foldMap = function(f, p) {
     return f(this._2);
 };
 
@@ -45,9 +46,7 @@ const uncurry3 = (f, t) => f(t._1._1, t._1._2, t._2);
 const uncurry4 = (f, t) => f(t._1._1._1, t._1._1._2, t._1._2, t._2);
 const uncurry5 = (f, t) => f(t._1._1._1._1, t._1._1._1._2, t._1._1._2, t._1._2, t._2);
 
-// Export
-if(typeof module != 'undefined')
-    module.exports = { Tuple, tuple2, tuple3, tuple4, tuple5,
-                curry2, curry3, curry4, curry5,
-                uncurry2, uncurry3, uncurry4, uncurry5
-              };
+module.exports = { Tuple, tuple2, tuple3, tuple4, tuple5
+                 , curry2, curry3, curry4, curry5
+                 , uncurry2, uncurry3, uncurry4, uncurry5
+                 };
