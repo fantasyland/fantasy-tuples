@@ -7,19 +7,19 @@ const Tuple = tagged('_1', '_2');
 function Applicative(a) {
     return {
         of: (x) => Tuple(a.empty(), x),
-        ap: (x, f) => Tuple(x._1, a.ap(x._2, f))
+        ap: (x, f) => Tuple(x._1, f(x._2))
     }
 }
 
 function Functor(a) {
     return {
-        map: (x, f) => Tuple(x._1, a.map(x._2, f))
+        map: (x, f) => Tuple(x._1, f(x._2))
     };
 }
 
 function Comonad(a) {
     return {
-        extend: (x, f) => Tuple(x._1, a.extend(x._2, f)),
+        extend: (x, f) => Tuple(x._1, f(x._2)),
         extract: (x) => x._2
     };
 }
@@ -27,13 +27,13 @@ function Comonad(a) {
 function Monoid(a, b) {
     return {
         empty: () => Tuple(a.empty(), b.empty()),
-        concat: (x, y) => Tuple(a.concat(x._1, y._1), b.concat(x._2, y._2))
+        concat: (x, y) => Tuple(x._1.concat(y._1), x._2.concat(y._2))
     };
 }
 
 function Setoid(a) {
     return {
-        equals: (x, y) => a.equals(x, y)
+        equals: (x, y) => x._1.equals(y._1) && x._2.equals(y._2)
     };
 }
 

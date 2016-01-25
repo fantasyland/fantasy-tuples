@@ -5,16 +5,17 @@ const env = require('fantasy-environment')();
 
 const Sum = tagged('x');
 
+Sum.prototype.equals = function(b) {
+    return Setoid(λ).equals(this, b);
+}
+
 const λ = env
     .method('concat', isString, (a, b) => a + b)
     .method('map', isString, (a, f) => f(a))
     .method('equals', isString, (a, b) => a === b)
     .method('concat', isNumber, (a, b) => a + b)
     .method('map', isNumber, (a, f) => f(a))
-    .method('equals', isNumber, (a, b) => a === b)
-    .method('map', isInstanceOf(Sum), function(a, f) { return Sum(this.map(a.x, f)); })
-    .method('equals', isInstanceOf(Sum), function(a, b) { return this.equals(a.x, b.x); })
-    .method('equals', isInstanceOf(Tuple), function(a, b) { return this.equals(a._1, b._1) && this.equals(a._2, b._2) });
+    .method('equals', isNumber, (a, b) => a === b);
 
 function Monoid(a) {
     return {
@@ -23,10 +24,22 @@ function Monoid(a) {
     };
 }
 
+function Functor(a) {
+    return {
+        map: (x, f) => Sum(a.map(x.x, f))
+    };
+}
+
 function Setoid(a) {
     return {
-        equals: (x, y) => a.equals(a, b)
+        equals: (x, y) => {
+            return a.equals(x.x, y.x);
+        }
     };
+}
+
+function inc(x) {
+    return x + 1;
 }
 
 const M = Monoid(λ);
@@ -36,7 +49,7 @@ const S = nested.Setoid(λ);
 exports.nested = {
     'testing': function(t) {
         const tuple = nested.Monoid(M, M).empty();
-        const mapped = F.map(tuple, (x) => x + 1);
+        const mapped = F.map(tuple, (x) => Functor(λ).map(x, inc));
         t.ok(S.equals(Tuple(Sum(0), Sum(1)), mapped));
         t.done();
     }
