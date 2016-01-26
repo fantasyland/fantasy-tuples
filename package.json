@@ -2,7 +2,8 @@
   "name": "fantasy-tuples",
   "version": "0.0.2",
   "description": "Tuple data structures.",
-  "main": "tuples.js",
+  "main": "fantasy-tuples.js",
+  "files": ["fantasy-tuples.js", "src/*.js"],
   "repository": {
     "type": "git",
     "url": "git://github.com/puffnfresh/fantasy-tuples.git"
