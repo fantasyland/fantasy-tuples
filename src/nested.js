@@ -3,7 +3,7 @@ const {map, extend, extract} = require('fantasy-land');
 const Tuple = tagged('_1', '_2');
 
 // Methods
-Tuple.prototype.bimap = function(f, g) {
+Tuple.prototype.dimap = function(f, g) {
     return Tuple(f(this._1), g(this._2));
 };
 Tuple.prototype[map] = function(f) {
