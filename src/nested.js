@@ -16,7 +16,7 @@ Tuple.prototype.uncurry = function(f) {
     return f(this._1, this._2);
 };
 Tuple.prototype[extend] = function(f) {
-    return Tuple(this._1, f(this._2));
+    return Tuple(this._1, f(this));
 };
 Tuple.prototype[extract] = function()  {
     return this._2;
